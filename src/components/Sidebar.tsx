@@ -7,7 +7,7 @@ import { NewNoteType } from '../App'
 // }
 
 const Sidebar = (props:any) => {
-    const {onAddName, notes,onDeleteNote, setActiveNote} = props;
+    const {onAddName, notes, onDeleteNote, setActiveNote, activeNote} = props;
   return (
     <SAppSidebar>
 
@@ -19,8 +19,8 @@ const Sidebar = (props:any) => {
         <SAppSidebarNotes>
             {notes.map((note: any)=>(
                 <SAppSidebarNote 
-                //ノートを選択した際にバイライトされる機能を実装したいが？？？
-                //  className={'SAppSidebarNote ${note.id === activeNote && "active"}'}
+                //選択されたノートがハイライトされる機能
+                 className={note.id === activeNote ? 'active':""}
                  key={note.id}
                  onClick={()=>setActiveNote(note.id)}
                  >

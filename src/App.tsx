@@ -6,7 +6,7 @@ import uuid from 'react-uuid';
 
 export type NewNoteType = {
   content: string;
-  id: string;
+  id: string | boolean;
   modDate: number;
   title: string;
 }
@@ -14,7 +14,7 @@ export type NewNoteType = {
 function App() {
  const [notes, setNotes] = useState<NewNoteType[]>([]);
  //サイドバー内の「新しいノート」をハイライトする機能
- const [activeNote, setActiveNote] = useState(false);
+ const [activeNote, setActiveNote] = useState<boolean>(false);
 
 const onAddName = ()=>{
   // console.log("ノートの追加");
@@ -32,7 +32,10 @@ const onAddName = ()=>{
 const onDeleteNote =(id: string)=>{
   const filterNotes = notes.filter((note) =>note.id !== id);
   setNotes(filterNotes);
-}
+};
+const getActiveNote = () => {
+  return notes.find((note)=> note.id === activeNote);
+} 
 
   return (
     <div className="App">
@@ -40,9 +43,10 @@ const onDeleteNote =(id: string)=>{
         onAddName={onAddName} 
         notes={notes} 
         onDeleteNote={onDeleteNote} 
+        activeNote={activeNote}
         setActiveNote={setActiveNote}
       />
-      <Main />
+      <Main activeNote={getActiveNote()}/>
      
     </div>
   )
