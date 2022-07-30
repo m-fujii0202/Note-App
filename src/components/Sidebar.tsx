@@ -1,23 +1,36 @@
 import styled from 'styled-components'
 import React from 'react'
+import { NewNoteType } from '../App'
 
-const Sidebar = () => {
+// type PropsType = {
+// props:;
+// }
+
+const Sidebar = (props:any) => {
+    const {onAddName, notes} = props;
   return (
     <SAppSidebar>
+
         <SAppSidebarHeader>
          <Sh1>ノート</Sh1>
-         <SButton>追加</SButton>
+         <SButton onClick={onAddName}>追加</SButton>
         </SAppSidebarHeader>
+
         <SAppSidebarNotes>
-            <SAppSidebarNote>
-                <SAppSidebarTitle>
-                    <strong>タイトル</strong>
-                    <SButton>削除</SButton>
-                </SAppSidebarTitle>
-                <Sp>ノート内容です</Sp>
-                <Ssmall>最後の修正日:XX/XX</Ssmall>
-            </SAppSidebarNote>
-        </SAppSidebarNotes>
+            {notes.map((note: any)=>(
+                <SAppSidebarNote key={note.id}>
+                    <SAppSidebarTitle>
+                        <strong>{note.title}</strong>
+                        <SButton>削除</SButton>
+                    </SAppSidebarTitle>
+                    <Sp>{note.content}</Sp>
+                    <Ssmall>{new Date(note.modDate).toLocaleDateString("ja-JP",{
+                        hour:"2-digit",
+                        minute:"2-digit",
+                    })}</Ssmall>
+                </SAppSidebarNote>
+                ))}
+             </SAppSidebarNotes>
     </SAppSidebar>
   )
 }
