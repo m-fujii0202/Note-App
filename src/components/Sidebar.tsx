@@ -7,7 +7,7 @@ import { NewNoteType } from '../App'
 // }
 
 const Sidebar = (props:any) => {
-    const {onAddName, notes} = props;
+    const {onAddName, notes,onDeleteNote} = props;
   return (
     <SAppSidebar>
 
@@ -21,7 +21,7 @@ const Sidebar = (props:any) => {
                 <SAppSidebarNote key={note.id}>
                     <SAppSidebarTitle>
                         <strong>{note.title}</strong>
-                        <SButton>削除</SButton>
+                        <SButton onClick={()=>onDeleteNote(note.id)}>削除</SButton>
                     </SAppSidebarTitle>
                     <Sp>{note.content}</Sp>
                     <Ssmall>{new Date(note.modDate).toLocaleDateString("ja-JP",{

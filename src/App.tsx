@@ -27,9 +27,14 @@ const onAddName = ()=>{
   console.log(notes);
 };
 
+const onDeleteNote =(id: string)=>{
+  const filterNotes = notes.filter((note) =>note.id !== id);
+  setNotes(filterNotes);
+}
+
   return (
     <div className="App">
-      <Sidebar onAddName={onAddName} notes={notes}/>
+      <Sidebar onAddName={onAddName} notes={notes} onDeleteNote={onDeleteNote}/>
       <Main />
      
     </div>
