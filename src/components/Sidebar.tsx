@@ -7,7 +7,7 @@ import { NewNoteType } from '../App'
 // }
 
 const Sidebar = (props:any) => {
-    const {onAddName, notes,onDeleteNote} = props;
+    const {onAddName, notes,onDeleteNote, setActiveNote} = props;
   return (
     <SAppSidebar>
 
@@ -18,7 +18,12 @@ const Sidebar = (props:any) => {
 
         <SAppSidebarNotes>
             {notes.map((note: any)=>(
-                <SAppSidebarNote key={note.id}>
+                <SAppSidebarNote 
+                //ノートを選択した際にバイライトされる機能を実装したいが？？？
+                //  className={'SAppSidebarNote ${note.id === activeNote && "active"}'}
+                 key={note.id}
+                 onClick={()=>setActiveNote(note.id)}
+                 >
                     <SAppSidebarTitle>
                         <strong>{note.title}</strong>
                         <SButton onClick={()=>onDeleteNote(note.id)}>削除</SButton>
@@ -71,6 +76,9 @@ const SAppSidebarNote = styled.div`
     cursor:pointer;
     transition:all 0.3s;
     &:hover{
+        background-color:#f1f0f0;
+    }
+    &.active{
         background-color:#f1f0f0;
     }
 `

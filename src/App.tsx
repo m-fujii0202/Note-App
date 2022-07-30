@@ -13,6 +13,8 @@ export type NewNoteType = {
 
 function App() {
  const [notes, setNotes] = useState<NewNoteType[]>([]);
+ //サイドバー内の「新しいノート」をハイライトする機能
+ const [activeNote, setActiveNote] = useState(false);
 
 const onAddName = ()=>{
   // console.log("ノートの追加");
@@ -34,7 +36,12 @@ const onDeleteNote =(id: string)=>{
 
   return (
     <div className="App">
-      <Sidebar onAddName={onAddName} notes={notes} onDeleteNote={onDeleteNote}/>
+      <Sidebar 
+        onAddName={onAddName} 
+        notes={notes} 
+        onDeleteNote={onDeleteNote} 
+        setActiveNote={setActiveNote}
+      />
       <Main />
      
     </div>
