@@ -68,7 +68,7 @@ const Sh1 = styled.h1`
 //スクロールバーが上手く表示されない
 const SAppSidebarNotes = styled.div`
     height:calc(100vh - 78px);
-    overflow-y: scroll;
+    overflow-y:scroll;
 `
 
 const SAppSidebarNote = styled.div`
