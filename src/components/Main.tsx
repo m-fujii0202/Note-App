@@ -1,6 +1,7 @@
 import { type } from 'os';
 import React from 'react'
 import styled from 'styled-components'
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 // type ActiveNoteType ={
 //   activeNote:{
@@ -31,7 +32,7 @@ const Main = (props:any) => {
   if(!activeNote){
     return <SNoActiveNote>ノートが選択されていません</SNoActiveNote>
   }
-  
+
   return (
     <SAppMain>
         <SAppMainNoteEdit>
@@ -98,7 +99,7 @@ const Sh1 = styled.h1`
  padding:25px 25px 0 25px;
  maragin:0 ;
 `
-const SMarkdownPreview = styled.div`
+const SMarkdownPreview = styled(ReactMarkdown)`
  padding:0 25px 25px 25px;
  line-height:2rem;
 `

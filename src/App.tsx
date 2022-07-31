@@ -21,7 +21,7 @@ const onAddName = ()=>{
   const newNote = {
    id: uuid(),
    title:"新しいノート",
-   content:"新しいノートの内容",
+   content:"",
    modDate:Date.now(),
   };
   //既存のノートに新しいノートを加える処理
