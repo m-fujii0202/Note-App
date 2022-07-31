@@ -8,6 +8,9 @@ import { NewNoteType } from '../App'
 
 const Sidebar = (props:any) => {
     const {onAddName, notes, onDeleteNote, setActiveNote, activeNote} = props;
+
+    const srotedNotes = notes.sort((a: { modDate: number; },b: { modDate: number; })=>b.modDate - a.modDate);
+
   return (
     <SAppSidebar>
 
@@ -17,7 +20,7 @@ const Sidebar = (props:any) => {
         </SAppSidebarHeader>
 
         <SAppSidebarNotes>
-            {notes.map((note: any)=>(
+            {srotedNotes.map((note: any)=>(
                 <SAppSidebarNote 
                 //選択されたノートがハイライトされる機能
                  className={note.id === activeNote ? 'active':""}
