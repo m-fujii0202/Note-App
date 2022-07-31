@@ -5,10 +5,10 @@ import Main from './components/Main'
 import uuid from 'react-uuid';
 
 export type NewNoteType = {
-  content: string;
+  content?: string;
   id: string | boolean;
-  modDate: number;
-  title: string;
+  modDate?: number;
+  title?: string;
 }
 
 function App() {
@@ -33,9 +33,22 @@ const onDeleteNote =(id: string)=>{
   const filterNotes = notes.filter((note) =>note.id !== id);
   setNotes(filterNotes);
 };
+
 const getActiveNote = () => {
   return notes.find((note)=> note.id === activeNote);
 } 
+
+const onUpdateNote = (updatedNote: { id: string | boolean; })=>{
+  //修正された新しいノートの配列を返す
+  const updatedNotesArray:NewNoteType[] = notes.map((note) => {
+    if(note.id === updatedNote.id){
+      return updatedNote;
+    }else{
+      return note;
+    }
+  });
+  setNotes(updatedNotesArray);
+};
 
   return (
     <div className="App">
@@ -46,7 +59,7 @@ const getActiveNote = () => {
         activeNote={activeNote}
         setActiveNote={setActiveNote}
       />
-      <Main activeNote={getActiveNote()}/>
+      <Main activeNote={getActiveNote()} onUpdateNote={onUpdateNote}/>
      
     </div>
   )

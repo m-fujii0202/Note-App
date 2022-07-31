@@ -1,17 +1,52 @@
+import { type } from 'os';
 import React from 'react'
 import styled from 'styled-components'
 
+// type ActiveNoteType ={
+//   activeNote:{
+//     content: string;
+//     id: string;
+//     modDate: number;
+//     title: string;
+// } | null;
+// }
+
+// type PropsType = {
+//   props:ActiveNote;
+// }
+
 const Main = (props:any) => {
-  const {activeNote} = props;
+  const {activeNote, onUpdateNote} = props;
+  console.log("props");
   console.log(props);
+
+  const onEditNote = (key: string, value: string)=>{
+    onUpdateNote({
+      ...activeNote,
+      [key]:value,
+      modDate:Date.now(),
+    })
+  }
+
   if(!activeNote){
     return <SNoActiveNote>ノートが選択されていません</SNoActiveNote>
   }
+  
   return (
     <SAppMain>
         <SAppMainNoteEdit>
-            <Sinput type="text" />
-            <Stextarea id="" placeholder='ノート内容を記入'></Stextarea>
+            <Sinput 
+              id='title'
+              type="text" 
+              value={activeNote.title} 
+              onChange={(e)=> onEditNote("title", e.target.value)}
+            />
+            <Stextarea 
+              id="content" 
+              placeholder='ノート内容を記入' 
+              value={activeNote.content}
+              onChange={(e)=> onEditNote("content", e.target.value)}
+            ></Stextarea>
         </SAppMainNoteEdit>
         <SAppMainNotePreview>
             <Sh1 preview-title=''>{activeNote.title}</Sh1>
