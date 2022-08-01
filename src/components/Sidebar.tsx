@@ -1,26 +1,34 @@
 import styled from 'styled-components'
 import React from 'react'
-import { NewNoteType } from '../App'
+import { type } from 'os';
+import { NewNoteType } from '../types/types'
 
-// type PropsType = {
-// props:;
-// }
+type PropsType = {
+    onAddName:() => void;
+    notes:NewNoteType[];
+    onDeleteNote:(id: string) => void;
+    setActiveNote:React.Dispatch<React.SetStateAction<boolean | NewNoteType>>;
+    activeNote: boolean | NewNoteType;
+}
 
 const Sidebar = (props:any) => {
     const {onAddName, notes, onDeleteNote, setActiveNote, activeNote} = props;
-
+    // console.log("props");
+    // console.log(props);
+    
+    //ノートをソートする機能
     const srotedNotes = notes.sort((a: { modDate: number; },b: { modDate: number; })=>b.modDate - a.modDate);
 
   return (
     <SAppSidebar>
-
+        
         <SAppSidebarHeader>
          <Sh1>ノート</Sh1>
          <SButton onClick={onAddName}>追加</SButton>
         </SAppSidebarHeader>
 
         <SAppSidebarNotes>
-            {srotedNotes.map((note: any)=>(
+            {srotedNotes.map((note:any)=>(
                 <SAppSidebarNote 
                 //選択されたノートがハイライトされる機能
                  className={note.id === activeNote ? 'active':""}

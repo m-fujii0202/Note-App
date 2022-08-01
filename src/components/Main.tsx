@@ -2,21 +2,15 @@ import { type } from 'os';
 import React from 'react'
 import styled from 'styled-components'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import { NewNoteType } from '../types/types'
 
-// type ActiveNoteType ={
-//   activeNote:{
-//     content: string;
-//     id: string;
-//     modDate: number;
-//     title: string;
-// } | null;
-// }
 
-// type PropsType = {
-//   props:ActiveNote;
-// }
+type PropsType = {
+  activeNote:NewNoteType | null;
+  onUpdateNote:{name:string };
+}
 
-const Main = (props:any) => {
+const Main = (props:PropsType) => {
   const {activeNote, onUpdateNote} = props;
   console.log("props");
   console.log(props);

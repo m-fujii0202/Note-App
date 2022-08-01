@@ -1,20 +1,27 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Sidebar from './components/Sidebar'
 import Main from './components/Main'
 import uuid from 'react-uuid';
+import { NewNoteType } from './types/types';
 
-export type NewNoteType = {
-  content?: string;
-  id: string | boolean;
-  modDate?: number;
-  title?: string;
-}
 
 function App() {
- const [notes, setNotes] = useState<NewNoteType[]>([]);
+ const [notes, setNotes] = useState<NewNoteType[]>(JSON.parse(localStorage.getItem("notes")) || []);
  //サイドバー内の「新しいノート」をハイライトする機能
- const [activeNote, setActiveNote] = useState<boolean>(false);
+ const [activeNote, setActiveNote] = useState<boolean | NewNoteType>(false);
+
+ useEffect(()=>{
+ //ローカルストレージにノートを保存する
+ localStorage.setItem("notes", JSON.stringify(notes));
+
+ },[notes])
+
+ useEffect(()=>{
+  //ローカルストレージにノートを保存する
+  setActiveNote(notes[0].id);
+  },[])
+ 
 
 const onAddName = ()=>{
   // console.log("ノートの追加");
