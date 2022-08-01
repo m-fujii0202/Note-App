@@ -1,75 +1,85 @@
-import { useEffect, useState } from 'react'
-import './App.css'
-import Sidebar from './components/Sidebar'
-import Main from './components/Main'
-import uuid from 'react-uuid';
-import { NewNoteType } from './types/types';
-
+import { useEffect, useState } from "react";
+import "./App.css";
+import Sidebar from "./components/Sidebar";
+import Main from "./components/Main";
+import uuid from "react-uuid";
+import { NewNoteType } from "./types/types";
 
 function App() {
- const [notes, setNotes] = useState<NewNoteType[]>(JSON.parse(localStorage.getItem("notes")) || []);
- //サイドバー内の「新しいノート」をハイライトする機能
- const [activeNote, setActiveNote] = useState<boolean | NewNoteType>(false);
+  const [notes, setNotes] = useState<NewNoteType[]>(
+    JSON.parse(localStorage.getItem("notes")) || []
+  );
+  //サイドバー内の「新しいノート」をハイライトする機能
+  const [activeNote, setActiveNote] = useState<string | null>(null);
 
- useEffect(()=>{
- //ローカルストレージにノートを保存する
- localStorage.setItem("notes", JSON.stringify(notes));
+  useEffect(() => {
+    //ローカルストレージにノートを保存する
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
 
- },[notes])
-
- useEffect(()=>{
-  //ローカルストレージにノートを保存する
-  setActiveNote(notes[0].id);
-  },[])
- 
-
-const onAddName = ()=>{
-  // console.log("ノートの追加");
-  const newNote = {
-   id: uuid(),
-   title:"新しいノート",
-   content:"",
-   modDate:Date.now(),
-  };
-  //既存のノートに新しいノートを加える処理
-  setNotes([...notes,newNote]);
-  console.log(notes);
-};
-
-const onDeleteNote =(id: string)=>{
-  const filterNotes = notes.filter((note) =>note.id !== id);
-  setNotes(filterNotes);
-};
-
-const getActiveNote = () => {
-  return notes.find((note)=> note.id === activeNote);
-} 
-
-const onUpdateNote = (updatedNote: { id: string | boolean; })=>{
-  //修正された新しいノートの配列を返す
-  const updatedNotesArray:NewNoteType[] = notes.map((note) => {
-    if(note.id === updatedNote.id){
-      return updatedNote;
-    }else{
-      return note;
+  useEffect(() => {
+    //ローカルストレージにノートを保存する
+    if (notes.length !== 0) {
+      setActiveNote(notes[0].id);
+    } else {
+      setNotes([
+        {
+          id: uuid(),
+          title: "新しいノート",
+          content: "",
+          modDate: Date.now(),
+        },
+      ]);
+      console.log("notes1111", notes);
     }
-  });
-  setNotes(updatedNotesArray);
-};
+  }, []);
+
+  const onAddName = () => {
+    // console.log("ノートの追加");
+    const newNote = {
+      id: uuid(),
+      title: "新しいノート",
+      content: "",
+      modDate: Date.now(),
+    };
+    //既存のノートに新しいノートを加える処理
+    setNotes([...notes, newNote]);
+    console.log(notes);
+  };
+
+  const onDeleteNote = (id: string) => {
+    const filterNotes = notes.filter((note) => note.id !== id);
+    setNotes(filterNotes);
+  };
+
+  const getActiveNote = () => {
+    return notes.find((note) => note.id === activeNote);
+  };
+
+  const onUpdateNote = (updatedNote: { id: string | boolean }) => {
+    //修正された新しいノートの配列を返す
+    const updatedNotesArray: NewNoteType[] = notes.map((note) => {
+      if (note.id === updatedNote.id) {
+        return updatedNote;
+      } else {
+        return note;
+      }
+    });
+    setNotes(updatedNotesArray);
+  };
 
   return (
     <div className="App">
-      <Sidebar 
-        onAddName={onAddName} 
-        notes={notes} 
-        onDeleteNote={onDeleteNote} 
+      <Sidebar
+        onAddName={onAddName}
+        notes={notes}
+        onDeleteNote={onDeleteNote}
         activeNote={activeNote}
         setActiveNote={setActiveNote}
       />
-      <Main activeNote={getActiveNote()} onUpdateNote={onUpdateNote}/>
-     
+      <Main activeNote={getActiveNote()} onUpdateNote={onUpdateNote} />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
